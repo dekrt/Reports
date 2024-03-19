@@ -8,8 +8,8 @@
 - 如果帮助到了你，可以考虑Buy me a cup of coffee!
 
 <div align="center">
-    <img src="./images/image-20240319102552678.png" alt="image-20240319102552678" style="zoom: 15%;" />
-    <img src="./images/image-20240319102706983.png" alt="image-20240319102706983" style="zoom: 15%;" />
+    <img src="./images/image-20240319102552678.png" alt="image-20240319102552678" width="20%" />
+    <img src="./images/image-20240319102706983.png" alt="image-20240319102706983" width="20%" />
 </div>
 
 
