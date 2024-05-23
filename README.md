@@ -5,7 +5,7 @@
 - 应该会陆续更新的，希望可以帮到你！
 - 可以看看我的博客：https://dekrt.cn/
 - 喜欢别的仓库也可以点点Star！
-- 如果帮助到了你，可以考虑Buy me a cup of coffee!
+- 如果帮助到了你，可以考虑`Buy me a cup of coffee`!
 
 <div align="center">
     <img src="./images/image-20240319102552678.png" alt="image-20240319102552678" width="20%" />
