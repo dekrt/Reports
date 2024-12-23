@@ -1,0 +1,40 @@
+{% extends "administrator.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>新建书籍</h2>
+                <hr class="mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" action="{% url 'new_book' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>书名</label>
+                        <input type="text" name="name" maxlength="150" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>出版社</label>
+                        <input type="text" name="publish" maxlength="150" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>出版时间</label>
+                        <input type="number" name="time" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" name="price" step="0.01" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">新建</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

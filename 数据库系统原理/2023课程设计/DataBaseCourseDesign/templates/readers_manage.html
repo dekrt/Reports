@@ -1,0 +1,51 @@
+{% extends "administrator.html" %}
+
+{% block content %}
+<div class="py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline" action="{% url 'readers_manage' %}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username"
+                            name="name" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if 'name' in request.GET %}
+<div class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>搜索结果</h2>
+                <hr>
+                {% if is_empty %}
+                <p class="lead">搜索无结果</p>
+                {% endif %}
+                {% for reader in readers %}
+                <p class="lead">
+                    <a href="{% url 'reader_manage' reader.id %}">
+                        {{ reader.username }}
+                    </a>
+                    <a class="btn btn-outline-primary ml-4" href="{% url 'delete_reader' reader.id %}">删除</a>
+                </p>
+                <p>
+                    姓:{{ reader.last_name }}
+                    名:{{ reader.first_name }}
+                    邮箱:{{ reader.email }}
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

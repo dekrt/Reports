@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* 基本颜色定义 */
+    :root {
+        --primary-color: #6baed6; /* 浅蓝色 */
+        --secondary-color: #eff3ff; /* 非常浅的蓝色 */
+        --text-color: #333333; /* 深灰色文字 */
+        --link-color: #4a90e2; /* 明亮的蓝色链接 */
+    }
+
+    body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+    .navbar {
+        background-color: var(--primary-color);
+    }
+
+    .nav-link,
+    .navbar-brand,
+    .dropdown-item {
+        color: #fff;
+    }
+
+    .nav-link:hover,
+    .dropdown-item:hover {
+        color: var(--link-color);
+        background-color: transparent;
+    }
+
+    .dropdown-menu {
+        background-color: var(--primary-color);
+    }
+
+    footer {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    a {
+        color: var(--link-color);
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* 其他页面元素样式根据需要添加 */
+</style>
+
+    
+<div class="py-5 text-center" style="">
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto col-md-6 col-10 bg-white p-5">
+                <h1 class="mb-4">Log in</h1>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Username" required name="username">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" required name="password">
+                    </div>
+                    {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+
+                    {% if next %}
+                    {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %}
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="next" value="{{ next }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline" action="{% url 'books' %}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search"
+                            name="name" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if 'name' in request.GET %}
+<div class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>搜索结果</h2>
+                <hr>
+                {% if is_empty %}
+                <p class="lead">搜索无结果</p>
+                {% endif %}
+                {% for book in books %}
+                <a href="{% url 'book' book.id %}">
+                    <p class="lead">{{ book.name }}</p>
+                </a>
+                <p>
+                    作者：
+                    {% for write in book.write_set.all %}
+                    {{ write.writer }}
+                    {% endfor %}
+                    出版社：{{ book.publish }} 出版时间：{{ book.time }}
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

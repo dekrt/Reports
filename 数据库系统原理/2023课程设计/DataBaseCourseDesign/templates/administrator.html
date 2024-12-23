@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block lead %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbar18">
+                <a class="navbar-brand d-none d-md-block" href="{% url 'index' %}">
+                    <b> 华中科技大学图书馆</b>
+                </a>
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            图书管理 </a>
+                        <div class="dropdown-menu bg-primary ">
+                            <a class="dropdown-item text-light" href="{% url 'books_manage' %}">搜索书籍</a>
+                            <a class="dropdown-item text-light" href="{% url 'new_book' %}">新建书籍</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            读者管理 </a>
+                        <div class="dropdown-menu bg-primary ">
+                            <a class="dropdown-item text-light" href="{% url 'readers_manage' %}">搜索读者</a>
+                            <a class="dropdown-item text-light" href="{% url 'new_reader' %}">新建读者</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            借阅管理 </a>
+                        <div class="dropdown-menu bg-primary ">
+                            <a class="dropdown-item text-light" href="{% url 'borrow_manage' %}">借书</a>
+                            <a class="dropdown-item text-light" href="{% url 'return_manage' %}">还书</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbardrop" data-toggle="dropdown">
+                            {% if request.user.is_authenticated %}
+                                {{ request.user.username }} 您好
+                            {% else %}
+                                欢迎
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu bg-primary ">
+                            {% if request.user.is_authenticated %}
+                                <a class="dropdown-item text-light" href="{% url 'logout' %}">登出</a>
+                            {% else %}
+                                <a class="dropdown-item text-light" href="{% url 'login' %}">登录</a>
+                            {% endif %}
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="mx-auto col-md-9">
+                    <h1 class="mb-3 text-center">本馆介绍</h1>
+                    <p>&nbsp; &nbsp;
+                        华中科技大学图书馆现设主馆、医学分馆、东区分馆三个馆区，馆舍总面积64581平方米，各类阅览室33个，可用座位6500多个，其中电子阅览室3个，计算机近300台。</p>
+                    <h3 class="mb-3">文献信息资源体系建设</h3>
+                    <p>&nbsp; &nbsp;
+                        图书馆积极服务华中科技大学的建设和发展，大力加强文献信息资源体系建设，优先发展电子资源，适度发展印刷资源。馆藏文献涵盖理、工、医、文、管等九大学科门类。&nbsp;&nbsp;<br>&nbsp;
+                        &nbsp; 截至2017年12月31日，馆藏文献总量为1045.98万册。医学古籍特藏是馆藏特色之一，三种古籍入选《国家珍贵古籍名录》。&nbsp;<br>&nbsp;
+                        &nbsp;
+                        现有中、外文数据库577个，数据库总量在全国高校名列前茅。一批高水平数据库为学校教学、科研和学科建设提供了强大的文献信息保障。
+                    </p>
+                    <h3 class="mb-3" style="">文献信息服务体系建设</h3>
+                    <p>&nbsp; &nbsp; 为服务好学校改革发展和学科需要，近年来，图书馆着力建设文献信息服务体系，拓宽知识服务边界，取得了良好效果。&nbsp;&nbsp;<br>&nbsp;
+                        &nbsp;
+                        依托丰富的馆藏资源和专业人才优势，图书馆开展了以职能部门和院系需求为目标，以决策支持服务和特色学科服务为中心的学科情报分析、定题及专利服务，为学校“双一流”建设当好科技情报的“千里眼”“顺风耳”。&nbsp;&nbsp;<br>&nbsp;
+                        &nbsp; 图书馆还为全校师生提供信息检索教学、科技查新、馆际互借与文献传递等多种形式的专题服务，面向全校各院系、各学科、各大科学平台开展了有针对性的学科服务，服务对象已延伸到校外。
+                    </p>
+                    <h3 class="mb-3">校园文化建设</h3>
+                    <p>&nbsp; &nbsp;
+                        除做好各项读者服务基础工作外，图书馆还不断拓展和深化服务，积极参与学校人才培养、信息化建设和校园文化建设。馆舍空间和多媒体空间、视频播放系统、高清视听室、学术报告厅等独特资源全年向院系和师生开放，学术大咖、科学前沿报告，高雅艺术、主题展览，精选好书、优选视频纷纷走进图书馆，与青年学子面对面。2014年开始打造的“一本好书，与你同行”系列阅读推广活动深受学生喜爱，2017年世界读书日专题活动“琅琅读书声”在第二届高校图书馆阅读推广案例大赛上荣获二等奖。
+                    </p>
+                    <h3 class="mb-3">“智慧化”图书馆建设</h3>
+                    <p>&nbsp; &nbsp;
+                        随着学校的快速发展，师生读者对泛在服务的需求越来越迫切，传统图书馆变身智慧图书馆已是大势所趋。近年来，图书馆不断加强数字化基础工作，致力于“智慧化”的探索。除广为人知的无线射频识别系统（RFID）等数字化系统外，创新性地建设了网络安全多维度防护、业务大数据平台、自建数据私有云、手机借还、读者蓝牙物联、高精度三维导航等特有的服务与应用平台，确保数据有容量、安全有保障、服务有智能、读者有感知，初步实现了“智慧化”图书馆的雏形。
+                    </p>
+                    <p>&nbsp; &nbsp;
+                        秉承“读者第一，服务育人”的办馆宗旨，图书馆在华中科技大学双一流的征程中，正向着一流研究型图书馆的目标努力奋进！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

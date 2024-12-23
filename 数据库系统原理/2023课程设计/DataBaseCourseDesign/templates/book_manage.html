@@ -1,0 +1,355 @@
+{% extends "administrator.html" %}
+
+{% block content %}
+<script type="text/javascript">
+    $(
+        function () {
+            let $write_table = $('#write_table');
+            let $write_new = $('#write_new');
+            let $write_edit = $('#write_edit');
+            let $write_cancel = $('#write_cancel');
+            let $write_delete = $('#write_delete');
+            let $write_form = $('#write_form');
+            $write_new.click(function () {
+                $write_new.addClass("disabled");
+                $write_cancel.removeClass("disabled");
+                $write_form.removeClass("d-none");
+
+                $write_form.attr("action", "{% url 'new_write' book.id %}")
+            });
+            $write_edit.click(function () {
+                $write_edit.addClass("disabled");
+                $write_cancel.removeClass("disabled");
+                $write_delete.addClass("disabled");
+                $write_form.removeClass("d-none");
+
+                var id = $write_table.bootstrapTable('getSelections')[0]["id"];
+                $write_form.attr("action", "/administrator/books_manage/write/edit/" + id + "/");
+            });
+            $write_cancel.click(function () {
+                if ($write_table.bootstrapTable('getSelections').length == 0) $write_new.removeClass("disabled");
+                else $write_edit.removeClass("disabled");
+                $write_cancel.addClass("disabled");
+                $write_form.addClass("d-none");
+            });
+            $write_table.bootstrapTable({
+                columns: [{
+                    field: 'state',
+                    checkbox: true
+                }, {
+                    field: 'id',
+                    title: 'ID'
+                }, {
+                    field: 'writer',
+                    title: '作者'
+                }],
+                toolbar: "#write_toolbar",
+                singleSelect: true,
+                clickToSelect: "true",
+                url: "{% url 'write' book.id %}",
+                onClickRow: function (row, $element, field) {
+                    if ($element.hasClass("selected")) {
+                        $write_new.removeClass("disabled");
+                        $write_edit.addClass("disabled");
+                        $write_cancel.addClass("disabled");
+                        $write_delete.addClass("disabled");
+                        $write_form.addClass("d-none");
+                    }
+                    else {
+                        $write_new.addClass("disabled");
+                        $write_edit.removeClass("disabled");
+                        $write_cancel.addClass("disabled");
+                        $write_delete.removeClass("disabled");
+                        $write_form.addClass("d-none");
+
+                        var id = row["id"];
+                        $write_delete.attr("href", "/administrator/books_manage/write/delete/" + id + "/");
+                    }
+                }
+            });
+
+
+            let $store_table = $('#store_table');
+            let $store_new = $('#store_new');
+            let $store_edit = $('#store_edit');
+            let $store_cancel = $('#store_cancel');
+            let $store_delete = $('#store_delete');
+            let $store_form = $('#store_form');
+            $store_new.click(function () {
+                $store_new.addClass("disabled");
+                $store_cancel.removeClass("disabled");
+                $store_form.removeClass("d-none");
+
+                $store_form.attr("action", "{% url 'new_store' book.id %}")
+            });
+            $store_edit.click(function () {
+                $store_edit.addClass("disabled");
+                $store_cancel.removeClass("disabled");
+                $store_delete.addClass("disabled");
+                $store_form.removeClass("d-none");
+
+                var id = $store_table.bootstrapTable('getSelections')[0]["id"];
+                $store_form.attr("action", "/administrator/books_manage/store/edit/" + id + "/");
+            });
+            $store_cancel.click(function () {
+                if ($store_table.bootstrapTable('getSelections').length == 0) $store_new.removeClass("disabled");
+                else $store_edit.removeClass("disabled");
+                $store_cancel.addClass("disabled");
+                $store_form.addClass("d-none");
+            });
+            $store_table.bootstrapTable({
+                columns: [{
+                    field: 'state',
+                    checkbox: true
+                }, {
+                    field: 'id',
+                    title: 'ID'
+                }, {
+                    field: 'location',
+                    title: '馆藏地点'
+                }, {
+                    field: 'store_state',
+                    title: '馆藏状态'
+                }],
+                toolbar: "#store_toolbar",
+                singleSelect: true,
+                clickToSelect: "true",
+                url: "{% url 'store' book.id %}",
+                onClickRow: function (row, $element, field) {
+                    if ($element.hasClass("selected")) {
+                        $store_new.removeClass("disabled");
+                        $store_edit.addClass("disabled");
+                        $store_cancel.addClass("disabled");
+                        $store_delete.addClass("disabled");
+                        $store_form.addClass("d-none");
+                    }
+                    else {
+                        $store_new.addClass("disabled");
+                        $store_edit.removeClass("disabled");
+                        $store_cancel.addClass("disabled");
+                        $store_delete.removeClass("disabled");
+                        $store_form.addClass("d-none");
+
+                        var id = row["id"];
+                        $store_delete.attr("href", "/administrator/books_manage/store/delete/" + id + "/");
+                    }
+                }
+            });
+        }
+    )
+</script>
+
+
+<div class="py-1 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <h2>图书信息管理</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-1 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab"
+                            data-target="#tabone">图书信息</a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo">修改信息</a>
+                    </li>
+                    <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">作者信息</a>
+                    </li>
+                    <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabfour">馆藏信息</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-2">
+                    <div class="tab-pane fade show active" id="tabone" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">编号</th>
+                                                <td>{{ book.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">书名</th>
+                                                <td>{{ book.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">作者</th>
+                                                <td>
+                                                    {% for write in book.write_set.all %}
+                                                    {{ write.writer }}
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">出版社</th>
+                                                <td>{{ book.publish }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">出版时间</th>
+                                                <td>{{ book.time }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">定价</th>
+                                                <td>{{ book.price }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <h3>馆藏书籍</h3>
+                                    <hr class="mb-4">
+                                </div>
+                            </div>
+                            {% if book.store_set.all.count == 0 %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4> 没有馆藏 </h4>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-8 p-3">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th scope="col">编号</th>
+                                                    <th scope="col">馆藏地点</th>
+                                                    <th scope="col">状态</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for store in book.store_set.all %}
+                                                <tr>
+                                                    <td>{{ store.id }}</td>
+                                                    <td>{{ store.location }}</td>
+                                                    <td>
+                                                        {% if store.state == 0 %}
+                                                        借出
+                                                        {% elif store.state == 1 %}
+                                                        在馆
+                                                        {% else %}
+                                                        损坏
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabtwo" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <form method="post" action="{% url 'edit_book' book.id %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>书名</label>
+                                            <input type="text" name="name" maxlength="150" required class="form-control"
+                                                value="{{ book.name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>出版社</label>
+                                            <input type="text" name="publish" maxlength="150" required
+                                                class="form-control" value="{{ book.publish }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>出版时间</label>
+                                            <input type="number" name="time" required class="form-control"
+                                                value="{{ book.time }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>价格</label>
+                                            <input type="number" name="price" step="0.01" required class="form-control"
+                                                value="{{ book.price }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabthree" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <div id="write_toolbar">
+                                        <button id="write_new" class="btn btn-outline-primary">新建</button>
+                                        <button id="write_edit" class="btn btn-outline-primary disabled">修改</button>
+                                        <button id="write_cancel" class="btn btn-outline-primary disabled">取消</button>
+                                        <a href="" id="write_delete" class="btn btn-outline-primary disabled">删除</a>
+                                    </div>
+                                    <table id="write_table" class="table table-hover table-striped table-bordered">
+                                        <thead class="thead-inverse">
+                                            <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="id">ID</th>
+                                                <th data-field="writer">作者</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <form id="write_form" class="d-none" method="post" action="">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>作者名</label>
+                                            <input type="text" maxlength="150" name="writer" required
+                                                class="form-control" value="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabfour" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <div id="store_toolbar">
+                                        <button id="store_new" class="btn btn-outline-primary">新建</button>
+                                        <button id="store_edit" class="btn btn-outline-primary disabled">修改</button>
+                                        <button id="store_cancel" class="btn btn-outline-primary disabled">取消</button>
+                                        <a href="" id="store_delete" class="btn btn-outline-primary disabled">删除</a>
+                                    </div>
+                                    <table id="store_table" class="table table-hover table-striped table-bordered">
+                                        <thead class="thead-inverse">
+                                            <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="id">ID</th>
+                                                <th data-field="location">馆藏地点</th>
+                                                <th data-field="store_state">状态</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <form id="store_form" class="d-none" method="post" action="">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>馆藏地点</label>
+                                            <input type="text" maxlength="150" name="location" required
+                                                class="form-control" value="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

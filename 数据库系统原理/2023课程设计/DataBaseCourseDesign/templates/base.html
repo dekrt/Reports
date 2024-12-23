@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>华中科技大学图书馆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}" type="text/css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.14.2/bootstrap-table.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #6baed6; /* 浅蓝色 */
+            --secondary-color: #eff3ff; /* 非常浅的蓝色 */
+            --text-color: #333333; /* 深灰色文字 */
+            --link-color: #4a90e2; /* 明亮的蓝色链接 */
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .navbar, .dropdown-menu, footer {
+            background-color: var(--primary-color);
+        }
+
+        .nav-link, .navbar-brand, .dropdown-item, footer {
+            color: #fff;
+        }
+
+        .nav-link:hover, .dropdown-item:hover {
+            color: var(--link-color);
+            background-color: transparent;
+        }
+
+        a, a:hover, a:focus {
+            text-decoration: none;
+            color: var(--link-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+            color: #495057;
+            background-color: transparent;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(236, 236, 236, 1);
+        }
+        .navbar-nav {
+            margin-right: 0 !important; /* 确保导航项向左对齐 */
+        }
+    
+        .navbar-collapse {
+            justify-content: start !important; /* 在Flex容器中靠左对齐内容 */
+        }
+
+         .navbar .dropdown-menu, .navbar .dropdown-menu.bg-primary {
+            background-color: var(--primary-color) !important; /* 为.bg-primary类设置新的背景色 */
+        }
+
+        .navbar .dropdown-menu .dropdown-item, .navbar .dropdown-menu.bg-primary .dropdown-item {
+            color: #fff !important; /* 设置下拉菜单项的文字颜色 */
+        }
+
+        .navbar .dropdown-menu .dropdown-item:hover, .navbar .dropdown-menu.bg-primary .dropdown-item:hover {
+            color: #fff !important; /* 鼠标悬停时的文字颜色 */
+            background-color: var(--link-color) !important; /* 鼠标悬停时的背景色 */
+        }
+        .content {
+        min-height: 450px; /* 可以根据需要调整这个值 */
+        padding: 20px; /* 添加一些内边距以改善视觉效果 */
+        }
+        
+
+    </style>
+
+
+
+    {% if messages %}
+    <script>
+        {% for msg in messages %}
+        alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+    {% endif %}
+</head>
+
+<body style="background-color: rgba(0,0,0,0.1)">
+    {% block lead %}
+        
+     <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-none d-md-block" href="{% url 'index' %}" style>
+                <b>华中科技大学图书馆</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar18" aria-controls="navbar18" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar18">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'books' %}">图书信息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tickets' %}">订单信息</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">借阅信息</a>
+                        <div class="dropdown-menu bg-primary">
+                            <a class="dropdown-item text-light" href="{% url 'loans' %}">借书记录</a>
+                            <a class="dropdown-item text-light" href="{% url 'loaned' %}">待还书籍</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbardrop" data-toggle="dropdown">
+                            {% if request.user.is_authenticated %}
+                            {{ request.user.username }} 您好
+                            {% else %}
+                            欢迎
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu bg-primary">
+                            {% if request.user.is_authenticated %}
+                            <a class="dropdown-item text-light" href="{% url 'self_inf' %}">个人信息</a>
+                            <a class="dropdown-item text-light" href="{% url 'logout' %}">登出</a>
+                            {% else %}
+                            <a class="dropdown-item text-light" href="{% url 'login' %}">登录</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <div class="content">
+        {% block content %}
+        <!-- 页面主要内容 -->
+        {% endblock %}
+    </div>
+
+</body>
+
+
+<footer class="text-muted py-4 bg-dark">
+    <div class="container">
+        <p class="mb-1">© 2023 华中科技大学图书馆</p>
+        <p class="mb-0">联系我们: <a href="mailto:xiaokaizhang@hust.edu.cn">xiaokaizhang@hust.edu.cn</a></p>
+    </div>
+</footer>
+
+
+
+
+
+
+</html>

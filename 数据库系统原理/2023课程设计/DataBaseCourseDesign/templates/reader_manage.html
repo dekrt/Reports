@@ -1,0 +1,116 @@
+{% extends "administrator.html" %}
+
+{% block content %}
+
+<div class="py-1 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <h2>读者信息管理</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-1 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab"
+                            data-target="#tabone">读者信息</a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo">修改信息</a>
+                    </li>
+                    <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">修改密码</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-2">
+                    <div class="tab-pane fade show active" id="tabone" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">用户名</th>
+                                                <td>{{ reader.username }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">姓</th>
+                                                <td>{{ reader.last_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">名</th>
+                                                <td>{{ reader.first_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">邮箱</th>
+                                                <td>{{ reader.email }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabtwo" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <form method="post" action="{% url 'edit_reader' reader.id %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>用户名</label>
+                                            <input type="text" name="username" maxlength="150" required
+                                                class="form-control" value="{{ reader.username }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>姓</label>
+                                            <input type="text" name="last_name" maxlength="150" required
+                                                class="form-control" value="{{ reader.last_name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>名</label>
+                                            <input type="text" name="first_name" maxlength="30" required
+                                                class="form-control" value="{{ reader.first_name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>邮箱</label>
+                                            <input type="email" name="email" required class="form-control"
+                                                value="{{ reader.email }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabthree" role="tabpanel">
+                        <div class="container">
+                            <div class="row">
+                                <div class="p-3 col-md-8">
+                                    <form method="post" action="{% url 'set_password' reader.id %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>密码</label>
+                                            <input type="password" name="password" maxlength="150" required
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>确认密码</label>
+                                            <input type="text" name="confirm_password" maxlength="150" required
+                                                class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

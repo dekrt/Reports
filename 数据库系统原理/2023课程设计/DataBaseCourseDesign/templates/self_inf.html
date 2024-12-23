@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>个人信息</h2>
+                <hr class="mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="p-3 col-md-8">
+                <table class="table table-bordered table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">用户名</th>
+                            <td>{{ request.user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">姓</th>
+                            <td>{{ request.user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">名</th>
+                            <td>{{ request.user.first_name }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">邮箱</th>
+                            <td>{{ request.user.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>待还书籍</h2>
+                <hr class="mb-4">
+            </div>
+        </div>
+        {% if is_empty %}
+        <h4>您没有待还书籍</h4>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12 p-3">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th scope="col">书名</th>
+                            <th scope="col">藏书号</th>
+                            <th scope="col">还书日期</th>
+                            <th scope="col">剩余天数</th>
+                            <th scope="col">续借</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for loan in loaned %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'book' loan.loan.store.book.id %}">{{ loan.loan.store.book.name }}</a>
+                            </td>
+                            <td>{{ loan.loan.store.id }}</td>
+                            <td>{{ loan.date }}</td>
+                            <td>
+                                {% if loan.remain < 0 %}
+                                已逾期
+                                {% else %}
+                                {{ loan.remain }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if loan.remain < 0 or loan.loan.state != 0 %}
+                                无法续借
+                                {% else %}
+                                <a href="{% url 'renew' loan.loan.id %}">续借</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

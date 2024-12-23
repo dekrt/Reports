@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>借阅记录</h2>
+                <hr class="mb-4">
+            </div>
+        </div>
+        {% if is_empty %}
+        <h4> 您没有借阅信息 </h4>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12 p-3">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th scope="col">书名</th>
+                            <th scope="col">藏书号</th>
+                            <th scope="col">时间</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for loan in loans %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'book' loan.store.book.id %}">{{ loan.store.book.name }}</a>
+                            </td>
+                            <td>{{ loan.store.id }}</td>
+                            <td>{{ loan.time }}</td>
+                            <td>
+                                {% if loan.state == 0 %}
+                                借书
+                                {% elif loan.state == 1 %}
+                                还书
+                                {% else %}
+                                续借
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

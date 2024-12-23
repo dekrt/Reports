@@ -1,0 +1,31 @@
+{% extends "administrator.html" %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>借阅书籍</h2>
+                <hr class="mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" action="{% url 'borrow_manage' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>藏书号</label>
+                        <input type="number" name="store_id" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" maxlength="150" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">借阅</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

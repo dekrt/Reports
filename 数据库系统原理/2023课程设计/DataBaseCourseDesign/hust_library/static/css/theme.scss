@@ -1,0 +1,48 @@
+// Options
+// 
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-rounded:            true !default;
+$enable-shadows:            true;
+$enable-transitions:        true;
+$enable-hover-media-query:  false;
+$enable-grid-classes:       true;
+$enable-print-styles:       true;
+
+// Variables
+//
+// Colors
+
+$primary-color: #6baed6; // 浅蓝色
+$secondary-color: #eff3ff; // 非常浅的蓝色
+$link-color: #4a90e2; // 明亮的蓝色链接
+$text-color: #333333; // 深灰色文字
+
+$theme-colors: (
+  primary: $primary-color,
+  secondary: $secondary-color,
+  light: #f3f3f3,
+  dark: #151515,
+  info: $link-color,
+  success: #28a745,
+  warning: #ffc107,
+  danger: #dc3545
+);
+
+$body-bg: white;
+$body-color: $text-color;
+
+$body-color-inverse: invert($body-color) !default;
+$link-color: $link-color;
+
+// Fonts
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$headings-font-family: $font-family-base;
+$display-font-family: $font-family-base;
+$font-weight-normal: 200;
+$headings-font-weight: 200;
+$lead-font-size:   1.30rem;
+
+$spacer: 1.5rem;
+
+@import 'bootstrap-4.3.1';
